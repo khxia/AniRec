@@ -4,19 +4,34 @@ const path = require('path');
 const app = express();
 const { MongoClient } = require("mongodb");
 
-const uri = process.env.MONGODB_URI;
+// const uri = process.env.MONGODB_URI;
+
+const uri = "mongodb+srv://user_alex:jqPQRYjIaagUCv5b@anime-database.qz4ri.mongodb.net/animelist?retryWrites=true&w=majority";
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('/api/temp', (req, res) => {
+app.get('/api/temp', async (req, res) => {
     const client = new MongoClient(uri, { useUnifiedTopology: true });
     try {
-        await client.connect()
-        const databse = client.db('animelist');
+
+        await client.connect();
+
+        const database = client.db('animelist');
+
         const collection = database.collection('anime_dict');
 
-        const query = collection.find( {"id": "111"} )
-        return query;
+        // const query = collection.find( {"id": "111"} );
+
+        const result = await client.db('animelist').collection('anime_dict').findOne( {"id": "111"} );
+        if (result) {
+            console.log(result);
+            return res.json(result);
+        }
+        else {
+            console.log("ERROR");
+        }
+
+        return 0;
     } catch(err) {
         console.log(err)
     }
