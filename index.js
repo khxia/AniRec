@@ -4,9 +4,9 @@ const path = require('path');
 const app = express();
 const { MongoClient } = require("mongodb");
 
-// const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI;
 
-const uri = "mongodb+srv://user_alex:jqPQRYjIaagUCv5b@anime-database.qz4ri.mongodb.net/animelist?retryWrites=true&w=majority";
+// const uri = "mongodb+srv://user_alex:jqPQRYjIaagUCv5b@anime-database.qz4ri.mongodb.net/animelist?retryWrites=true&w=majority";
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 

@@ -1,14 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
 
 function App() {
-  var name = 'blank';
-  var id = 'blank';
+  const [ name, updateName ] = useState('blaNk');
+  const [ id, updateID ] = useState('blnk');
+
+
   fetch('/api/temp').then( (response) => response.json()).then( (resJson) => {
-    name = resJson.name;
-    id = resJson.id;
-    console.log(name);
-    console.log(id);
+    updateName(resJson.name);
+    updateID(resJson.id);
   })
   return (
     <div className="App">
