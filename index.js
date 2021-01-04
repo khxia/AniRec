@@ -4,9 +4,9 @@ const path = require('path');
 const app = express();
 const { MongoClient } = require("mongodb");
 
-const uri = process.env.MONGODB_URI;
+// const uri = process.env.MONGODB_URI;
 
-// const uri = "mongodb+srv://user_alex:jqPQRYjIaagUCv5b@anime-database.qz4ri.mongodb.net/animelist?retryWrites=true&w=majority";
+const uri = "mongodb+srv://user_alex:jqPQRYjIaagUCv5b@anime-database.qz4ri.mongodb.net/<dbname>?retryWrites=true&w=majority";
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -22,7 +22,7 @@ app.get('/api/temp', async (req, res) => {
 
         // const query = collection.find( {"id": "111"} );
 
-        const result = await client.db('animelist').collection('anime_dict').findOne( {"id": "111"} );
+        const result = await collection.findOne( {"id": "111"} );
         if (result) {
             console.log(result);
             return res.json(result);
@@ -39,6 +39,10 @@ app.get('/api/temp', async (req, res) => {
         await client.close()
     }
 });
+
+app.use('/api/recommender', require('./routes/start'));
+
+app.use('/api/master_list', require('./routes/master_list'));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname+'/client/build/index.html'));

@@ -1,4 +1,3 @@
-
 // Question.options = Array[n][3] 
 // Where Question.options[i] = [string: Question, int: 0=anime/1=question, int: id]
 // id = the index to question_list or the anime_list/anime_dict
@@ -13,7 +12,7 @@ class Question {
     get_question() { 
         return this.question;
     }
-    get_all_options(index) {
+    get_all_options() {
         return this.options;
     }
     get_single_option(index) {
@@ -578,3 +577,5 @@ const questions_list = [
         id=50
     )
 ]
+
+module.exports = questions_list;
