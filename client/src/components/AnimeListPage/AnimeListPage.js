@@ -41,7 +41,7 @@ function AnimeListPage() {
       <main>
       <div className={classes.sectionContainer}>
         <Typography variant="h4" component="h2">
-          AnimeList
+          Anime List
         </Typography>
         <p>
           <Typography variant="body1" gutterBottom>

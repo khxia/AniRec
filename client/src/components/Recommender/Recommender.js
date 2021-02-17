@@ -116,7 +116,7 @@ function Recommender() {
             setButtonPressed(false);
         })
         }
-    }, [buttonPressed, createAnimeList, createOptionList]);
+    }, [buttonPressed]);
     
     return (
         <div className={classes.container}>
