@@ -166,7 +166,7 @@ const questions_list = [
     new Question(
         question="What sort of heavy?",
         options=[
-            ["I've gote tissues", 1, 28],
+            ["I've got tissues", 1, 28],
             ["Heavy cringe", 1, 29],
             ["Warm and bittersweet", 1, 30]
         ],

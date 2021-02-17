@@ -2,14 +2,14 @@ const question_list = require('../source/questions.js');
 const similar_animes = require('../source/data/similar_anime_dict.js');
 const express = require('express');
 const router = express.Router();
+const anime_dict = require('../source/data/anime_dict.js');
 
+const doMongo = false;
 const app = express();
 
 const { MongoClient } = require("mongodb");
 
-// const uri = process.env.MONGODB_URI;
-
-const uri = "mongodb+srv://user_alex:jqPQRYjIaagUCv5b@anime-database.qz4ri.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const uri = process.env.MONGODB_URI;
 
 router.get('/start', async (req, res) => {
     try {
@@ -89,12 +89,23 @@ router.get('/next', async (req, res) => {
         return res.json(ret_obj);
     }
     else {
-        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        if (doMongo) {
+            const client = new MongoClient(uri, { useUnifiedTopology: true });
+        }
         try {
-            await client.connect();
-            const database = client.db('animelist');
-            const collection = database.collection('anime_dict');
-            const result = await collection.findOne( { "id": String(id_int) } );
+            let result;
+            if (doMongo) {
+                await client.connect();
+                const database = client.db('animelist');
+                const collection = database.collection('anime_dict');
+                result = await collection.findOne( { "id": String(id_int) } );
+            }
+            else {
+                result = { 
+                    name: anime_dict[id_int],
+                    id: id_int
+                }
+            }
             const a_list = [{
                 name: result.name,
                 id: result.id
@@ -102,8 +113,17 @@ router.get('/next', async (req, res) => {
             if (result) {
                 if (id_int in similar_animes) {
                     const sim_list = similar_animes[id_int];
-                   for (one_id of sim_list) {
-                        const ex_res = await collection.findOne( { "id": String(one_id) } );
+                    for (one_id of sim_list) {
+                        let ex_res;
+                        if (doMongo) {
+                            ex_res = await collection.findOne( { "id": String(one_id) } );
+                        }
+                        else {
+                            ex_res = { 
+                                name: anime_dict[one_id],
+                                id: one_id
+                            }
+                        }
                         if (ex_res) {
                             a_list.push({
                                 name: ex_res.name,

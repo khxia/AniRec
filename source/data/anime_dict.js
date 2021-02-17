@@ -213,3 +213,5 @@ const anime_dict = {
     211: 'Tonari no Kaibutsu-kun',
     212: 'Hachimitsu to Clover'
 }
+
+module.exports = anime_dict;

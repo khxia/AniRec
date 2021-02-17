@@ -5,9 +5,7 @@ const app = express();
 
 const { MongoClient } = require("mongodb");
 
-// const uri = process.env.MONGODB_URI;
-
-const uri = "mongodb+srv://user_alex:jqPQRYjIaagUCv5b@anime-database.qz4ri.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const uri = process.env.MONGODB_URI;
 
 router.get('/', async (req, res) => {
     const client = new MongoClient(uri, { useUnifiedTopology: true });
