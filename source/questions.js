@@ -27,7 +27,6 @@ const questions_list = [
     new Question(
         question="What kind of series are you looking for?",
         options=[
-            ["Series? What if I want to watch a movie?", 0, 0],
             ["Action/Adventure", 1, 1],
             ["Comedy", 1, 2],
             ["Slice of Life", 1, 3],

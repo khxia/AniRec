@@ -14,19 +14,20 @@ const THEME = createMuiTheme({
     "fontWeightLight": 300,
     "fontWeightRegular": 400,
     "fontWeightMedium": 400
-  },
+  }
 });
 
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'Anime List', url: '/anime-list' },
-  { title: 'API', url: 'https://khxia.github.io' }
+  { title: 'API', url: '/api' }
 ];
 
 const useStyles = makeStyles((theme) => ({
   sectionContainer: {
     width: '80%',
-    margin: 'auto'
+    margin: 'auto',
+    paddingBottom: '50px'
   }
 }));
 
@@ -65,7 +66,7 @@ function Home() {
         <p>
           <Typography variant="body1" gutterBottom>
             If you want to incorporate this recommender into your own apps, check out the <a 
-            href="https://khxia.github.io">API</a> for AniRec.
+            href="/api">API</a> for AniRec.
           </Typography>
         </p>
         <br />

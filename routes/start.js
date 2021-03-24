@@ -3,7 +3,7 @@ const similar_animes = require('../source/data/similar_anime_dict.js');
 const express = require('express');
 const router = express.Router();
 const anime_dict = require('../source/data/anime_dict.js');
-
+const mal_dict = require('../source/data/mal_dict.js');
 const doMongo = false;
 const app = express();
 
@@ -103,12 +103,14 @@ router.get('/next', async (req, res) => {
             else {
                 result = { 
                     name: anime_dict[id_int],
-                    id: id_int
+                    id: id_int,
+                    mal_id: mal_dict[id_int]
                 }
             }
             const a_list = [{
                 name: result.name,
-                id: result.id
+                id: result.id,
+                mal_id: mal_dict[result.id]
             }];
             if (result) {
                 if (id_int in similar_animes) {
@@ -121,13 +123,15 @@ router.get('/next', async (req, res) => {
                         else {
                             ex_res = { 
                                 name: anime_dict[one_id],
-                                id: one_id
+                                id: one_id,
+                                mal_id: mal_dict[one_id]
                             }
                         }
                         if (ex_res) {
                             a_list.push({
                                 name: ex_res.name,
-                                id: ex_res.id
+                                id: ex_res.id,
+                                mal_id: mal_dict[ex_res.id]
                             })
                         }
                     }
@@ -168,7 +172,8 @@ router.get('/random', async (req, res) => {
             const result = await collection.findOne( { "id": String(random_i) } );
             const a_list = [{
                 name: result.name,
-                id: result.id
+                id: result.id,
+                mal_id: mal_dict[result.id]
             }];
             if (result) {
                 if (random_i in similar_animes) {
@@ -178,7 +183,8 @@ router.get('/random', async (req, res) => {
                         if (ex_res) {
                             a_list.push({
                                 name: ex_res.name,
-                                id: ex_res.id
+                                id: ex_res.id,
+                                mal_id: mal_dict[ex_res.id]
                             })
                         }
                     }

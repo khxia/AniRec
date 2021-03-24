@@ -5,9 +5,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
+
+import mal_icon from './mal_icon.png'
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -28,8 +34,30 @@ const useStyles = makeStyles(() => ({
         marginTop: '20px'
     },
     animeCard: {
-        width: "200px",
-        height: "100"
+        width: 225
+    },
+    media: {
+        width: 225,
+        height: 314,
+        borderRadius: '5%'
+    },
+    tags: {
+        fontSize: 12,
+    },
+    cardContent: {
+        textAlign: 'left',
+        padding: '12px 16px 4px'
+    },
+    malIcon: {
+        borderRadius: "50%"
+    },
+    cardActions: {
+        alignItems: 'center',
+        padding: '8px',
+        display: 'block'
+    },
+    cardHeader: {
+        padding: '4px 8px 8px'
     }
 }));
 
@@ -66,19 +94,70 @@ function Recommender() {
         )
     }
 
-    const createAnimeList = (animes) => {
+    const createAnimeList = async (animes) => {
+        const animes_list = [];
+        try {
+            for (const anime of animes) {
+                const res = await fetch(`https://api.jikan.moe/v3/anime/${anime.mal_id}`);
+                const obj = await res.json();
+                console.log(obj);
+                let genre_str = "";
+                for (const genre of obj.genres) {
+                    genre_str = genre_str.concat(`${genre.name} `);
+                }
+                animes_list.push({
+                    id: anime.id,
+                    mal_id: anime.mal_id,
+                    image: obj.image_url,
+                    url: obj.url,
+                    name: obj.title,
+                    score: obj.score,
+                    genre: genre_str,
+                    episodes: obj.episodes
+                })
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
         return (
-            <Grid container spacing={3}  direction="column" alignItems="center"
+            <Grid container spacing={3}  direction="row" alignItems="flex-start"
             justify="center" className={classes.animeGrid}>
-                {animes.map((anime, index) => {
+                {animes_list.map((anime, index) => {
                     return (
                         <Grid key={index} item xs>
                             <Card className={classes.animeCard}>
-                                <CardContent>
-                                    <Typography variant="body1" gutterBottom>
-                                        {anime.name}
+                                <CardHeader
+                                  className={classes.cardHeader}
+                                  title={
+                                      <Typography variant="subtitle1" component="h6">
+                                          <b>{anime.name}</b>
+                                      </Typography>
+                                    }
+                                  subheader={
+                                    <Typography variant="subtitle2" component="h6">
+                                        <i>{`${anime.episodes} episodes`}</i>
+                                    </Typography>
+                                  }
+                                />
+                                <CardMedia
+                                  className={classes.media}
+                                  image={anime.image}
+                                  title="cover photo"
+                                />
+                                <CardContent className={classes.cardContent}>
+                                    <Typography className={classes.tags} variant="body2">
+                                        <b>Tags:</b> {anime.genre}
+                                    </Typography>
+                                    <Typography className={classes.tags} variant="body2">
+                                        <b>MAL Score:</b> {anime.score}
                                     </Typography>
                                 </CardContent>
+                                <CardActions className={classes.cardActions} disableSpacing>
+                                  <Link href={anime.url} target="_blank" rel="noreferrer">
+                                      <img className={classes.malIcon} src={mal_icon} width="30" height="30"/>
+                                  </Link>
+                                </CardActions>
                             </Card>
                         </Grid>
                     );
@@ -95,7 +174,9 @@ function Recommender() {
             }
             else if (resJson.type === "anime") {
                 setQuestion("Here are the results!")
-                setContent(createAnimeList(resJson.animes));
+                createAnimeList(resJson.animes).then((newGrid) => {
+                    setContent(newGrid);
+                })
             }
         })
     }, []);
@@ -111,7 +192,9 @@ function Recommender() {
             }
             else if (resJson.type === "anime") {
                 setQuestion("Here are the results!");
-                setContent(createAnimeList(resJson.animes));
+                createAnimeList(resJson.animes).then((newGrid) => {
+                    setContent(newGrid);
+                })
             }
             setButtonPressed(false);
         })
