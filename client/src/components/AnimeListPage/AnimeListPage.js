@@ -19,7 +19,7 @@ const THEME = createMuiTheme({
 const sections = [
   { title: 'Home', url: '/' },
   { title: 'Anime List', url: '/anime-list' },
-  { title: 'API', url: 'https://khxia.github.io' }
+  { title: 'API', url: '/api' }
 ];
 
 const useStyles = makeStyles((theme) => ({
