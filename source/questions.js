@@ -32,7 +32,7 @@ const questions_list = [
             ["Slice of Life", 1, 3],
             ["Drama", 1, 4],
             ["Thriller & Horror", 1, 5],
-            ["Give me one of your favourite animes", 0, 116]
+            ["Give me your favourite animes", 0, 0]
         ],
         id=0
     ),

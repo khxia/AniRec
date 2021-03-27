@@ -135,6 +135,9 @@ router.get('/next', async (req, res) => {
                             })
                         }
                     }
+                    if (id_int === 0) {
+                        a_list.splice(0, 1);
+                    }
                 }
                 const ret_obj = {
                     type: "anime",

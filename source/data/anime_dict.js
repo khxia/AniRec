@@ -1,5 +1,5 @@
 const anime_dict = {
-    0: "",
+    0: "Used for favourite anime",
     1: 'Cowboy Bebop',
     2: 'Fullmetal Alchemist: Brotherhood',
     3: 'Zetsuen no Tempest',

@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -58,6 +59,9 @@ const useStyles = makeStyles(() => ({
     },
     cardHeader: {
         padding: '4px 8px 8px'
+    },
+    resetButton: {
+        padding: '5px'
     }
 }));
 
@@ -69,6 +73,22 @@ function Recommender() {
     const [ buttonPressed, setButtonPressed ] = useState(false);
     const [ selectedOption, setSelectedOption ] = useState(0);
     console.log('re-render');
+
+    const onClickReset = () => {
+        fetch('/api/recommender/start').then( (response) => response.json()).then( (resJson) => {
+            if (resJson.type === "question") {
+                setQuestion(resJson.question);
+                setQuestionID(resJson.current_id);
+                setContent(createOptionList(resJson.options));
+            }
+            else if (resJson.type === "anime") {
+                setQuestion("Here are the results!")
+                createAnimeList(resJson.animes).then((newGrid) => {
+                    setContent(newGrid);
+                })
+            }
+        })
+    }
 
     const onClickOption = (index) => {
         setSelectedOption(index);
@@ -207,6 +227,10 @@ function Recommender() {
               <i>{question}</i>
             </Typography>
             {content}
+            <br/>
+            <Button className={classes.resetButton} 
+                onClick={onClickReset} variant="contained" size="small" >
+            Reset</Button>
         </div>
     )
 }
