@@ -211,7 +211,9 @@ const anime_dict = {
     209: 'Skip Beat!',
     210: 'Ore Monogatari!!',
     211: 'Tonari no Kaibutsu-kun',
-    212: 'Hachimitsu to Clover'
+    212: 'Hachimitsu to Clover',  // cutoff
+    213: 'Jujutsu Kaisen',
+    214: 'Yuru Camp △'
 }
 
 module.exports = anime_dict;

@@ -323,7 +323,8 @@ const questions_list = [
             ["Wannabe Popstars", 1, 39], 
             ["Working in a game company", 0, 108],
             ["Tank driving", 0, 180],
-            ["Cute PTSD (...what?)", 1, 40]
+            ["Cute PTSD (...what?)", 1, 40],
+            ["Camping in Japan", 0, 214]
         ],
         id=27
     ),
@@ -515,7 +516,8 @@ const questions_list = [
             ["A hero that can end things with one punch (you know what I'm talking about", 0, 151],
             ["Kick-ass firefighters", 0, 103],
             ["Solving supernatural mysteries", 0, 117],
-            ["Comedic action involving espers", 0, 140]
+            ["Comedic action involving espers", 0, 140],
+            ["Exorcizing curses", 0, 213]
         ],
         id=45
     ),
